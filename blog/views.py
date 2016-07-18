@@ -1,29 +1,23 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
-from .forms import NameForm
+from .forms import NameForm, PostForm
+from .models import Beliefs
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+def my_beliefs(request):
+    posts = Beliefs.objects.all()
+    form = PostForm()
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('blog/my_beliefs.html')
+        else:
+            form = PostForm()
+    return render(request, 'blog/my_beliefs.html', {'posts': posts, 'form': form})
 
 def blog_home(request):
     return render(request, 'blog/home.html', {})
-
-def get_name(request):
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = NameForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            return HttpResponseRedirect('/thanks/')
-
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = NameForm()
-
-    return render(request, 'name.html', {'form': form})

@@ -1,0 +1,26 @@
+{% extends 'blog/base.html' %}
+
+
+
+
+{% block content %}
+            {% for post in posts %}
+
+            <h1>{{ post.title }}</h1>
+            <p>{{ post.text|linebreaks }}</p>
+
+            {% endfor %}
+
+        
+
+      <form method="POST" class="form-horizontal">
+        <div class="form-group">
+          {% csrf_token %}
+          {{ form }}
+          <button type="submit" class="save btn btn-default">Save</button>
+        </div>
+      </form>
+
+
+
+{% endblock %}

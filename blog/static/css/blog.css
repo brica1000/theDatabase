@@ -1,14 +1,16 @@
 .page-header {
-    
+
     background-position: center;
     background-size: cover;
     margin-top: 0;
     padding: 20px 20px 20px 40px;
-    height: 301px;
+    height: 15em;
 }
 
+
+
 .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
-    color: #ffffff;
+    color: #3333ff;
     font-size: 36pt;
     text-decoration: none;
 }
@@ -40,10 +42,10 @@ h1, h2, h3, h4 {
 }
 
 .top-menu, .top-menu:hover, .top-menu:visited {
-    color: #ffffff;
+    color: #9DEDA3;
     float: right;
-    font-size: 26pt;
-    margin-right: 20px;
+    font-size: 2em;
+    margin-right: 2em;
 }
 
 .post {
@@ -56,4 +58,9 @@ h1, h2, h3, h4 {
 
 .comment {
     margin: 20px 0px 20px 20px;
+}
+
+.btn-info {
+  margin-right: 2em;
+  float: right;
 }
