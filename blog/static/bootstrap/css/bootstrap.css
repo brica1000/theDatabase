@@ -4,6 +4,17 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+#other_projects {
+  position: relative;
+  min-height: 150px;
+}
+
+#other_projects_content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;

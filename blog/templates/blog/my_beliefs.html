@@ -1,26 +1,32 @@
+<div class="container">
 {% extends 'blog/base.html' %}
-
-
-
-
 {% block content %}
-            {% for post in posts %}
 
-            <h1>{{ post.title }}</h1>
-            <p>{{ post.text|linebreaks }}</p>
 
-            {% endfor %}
+{% for post in posts %}
 
-        
+<h1>{{ post.title }}</h1>
+<p>{{ post.text|linebreaks }}</p>
 
-      <form method="POST" class="form-horizontal">
-        <div class="form-group">
-          {% csrf_token %}
-          {{ form }}
-          <button type="submit" class="save btn btn-default">Save</button>
-        </div>
-      </form>
+<a class="btn btn-default" href="{% url 'edit_beliefs' %}"><span class="glyphicon glyphicon-pencil"></span></a>
 
+{% endfor %}
+
+</div>
+
+<div class="container" id="other_projects">
+    <div class="dropup">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Other Projects
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <li><a href="{% url 'cs_scrape' %}">Pick the data you want from CouchSurfing</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="{% url 'blog_home' %}">theDatabase</a></li>
+      </ul>
+    </div>
+</div>
 
 
 {% endblock %}
