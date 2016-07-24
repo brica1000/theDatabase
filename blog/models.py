@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from datetime import datetime
 
 
 class Beliefs(models.Model):
@@ -18,3 +19,36 @@ class Beliefs(models.Model):
         super(Blog, self).save(*args, **kwargs) # Call the "real" save() method.
         # do_something_else()
     """
+
+
+class Org(models.Model):
+    name = models.CharField(max_length=200) # Should link to its site
+    info = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
+class Search(models.Model):
+    search_input = models.CharField(max_length=200)
+
+
+class Vari(models.Model):
+    value = models.CharField(max_length=100)
+    type1 = models.CharField(default="one", max_length=100)
+
+    def __str__(self):
+        return (self.value, self.type)
+
+
+class NewsFeed(models.Model):
+    title = models.CharField(max_length=200)
+    text = models.TextField()
+    published_date = models.DateTimeField(default=datetime.now, blank=True)
+
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.title

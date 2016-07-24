@@ -1,15 +1,43 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.utils import timezone
 from django.core.urlresolvers import reverse
 
-from .forms import NameForm, PostForm
-from .models import Beliefs
+from .forms import CSInputForm, PostForm, OrgForm, NewsForm, SearchOrgForm
+from .models import Beliefs, Vari, Org, NewsFeed, Search
+
+from mymodule import Shape
 
 
 def blog_home(request):
-    return render(request, 'blog/home.html', {})
+    news_events = NewsFeed.objects.order_by('-published_date')
+    return render(request, 'blog/home.html', {'news_events': news_events,})
+
+
+def add_news_event(request):
+    news_event = NewsFeed()
+    if request.method == "POST":
+        form = NewsForm(request.POST, instance=news_event)
+        if form.is_valid():
+            news_event = form.save(commit=False)
+            news_event.save()
+            return HttpResponseRedirect(reverse('blog_home'))
+    else:
+        form = NewsForm(instance=news_event)
+    return render(request, 'blog/add_news_event.html', {'form': form})
+
+
+
+def modify_news_event(request, pk):
+    news_event = get_object_or_404(NewsFeed, pk=pk)
+    if request.method == "POST":
+        form = NewsForm(request.POST, instance=news_event)
+        if form.is_valid():
+            news_event.publish()
+            return HttpResponseRedirect(reverse('blog_home'))
+    else:
+        form = NewsForm(instance=news_event)
+    return render(request, 'blog/modify_news_event.html', {'form':form})
 
 
 def my_beliefs(request):
@@ -30,5 +58,58 @@ def edit_beliefs(request):
     return render(request, 'blog/edit_beliefs.html', {'form': form})
 
 
+def organizations(request):
+    organizations = Org.objects.all()
+    if request.method == "POST":
+        search_form = SearchOrgForm(request.POST)
+        if search_form.is_valid():
+            search_form.save()
+            return HttpResponseRedirect(reverse('search_results'))
+    else:
+        search_form = SearchOrgForm()
+    return render(request, 'blog/organizations.html', {'organizations': organizations,'search_form':search_form})
+
+
+def search_results(request):
+    return render(request, 'blog/search_results.html')
+
+
+def modify(request, pk):
+    organization = get_object_or_404(Org, pk=pk)
+    if request.method == "POST":
+        form = OrgForm(request.POST, instance=organization)
+        if form.is_valid():
+            organization = form.save(commit=False)
+            organization.save()
+            return HttpResponseRedirect(reverse('organizations'))
+    else:
+        form = OrgForm(instance=organization)
+    return render(request, 'blog/modify.html', {'form': form})
+
+
+
+def contribute(request):
+    return render(request, 'blog/contribute.html', {})
+
+
 def cs_scrape(request):
-    return render(request, 'blog/cs_scrape.html', {})
+    if request.method == "POST":
+        form = CSInputForm(request.POST)
+        if form.is_valid():
+            result = form.save(commit=False)
+            result.save()
+            return HttpResponseRedirect(reverse('cs_results'))
+    else:
+        form = CSInputForm()
+    return render(request, 'blog/cs_scrape.html', {'form': form})
+
+def cs_results(request):
+    results = Vari.objects.all()
+    x = int(results[len(results)-1].value) # Input(a number) to operate on
+    t = results[len(results)-1].type1
+    output = Shape.NuttyNumber(x, t)
+    return render(request, 'blog/cs_results.html', {'results': results, 'output': output})
+
+
+def clothing_design(request):
+    return render(request, 'blog/clothing_design.html')

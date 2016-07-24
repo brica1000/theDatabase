@@ -1,9 +1,21 @@
+<div class="container">
 {% extends 'blog/base.html' %}
 
 {% block content %}
 
+{% if user.is_authenticated %}
+<h3><a href="{% url 'add_news_event' %}"><span class="glyphicon glyphicon-tree-conifer"></span></a></h3>
+{% endif %}
+
+<div class="news_feed">
+    <h1>News</h1>
+    {% for event in news_events %}
+    <h4><a href="{% url 'modify_news_event' pk=event.pk %}">{{ event.title }}</a><h4>
+    <p>{{ event.text }}<p>
+    <p>{{ event.published_date }}</p>
+    {% endfor %}
+</div>
 
 
-
-
+</div>
 {% endblock %}

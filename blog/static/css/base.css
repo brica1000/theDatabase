@@ -4,3 +4,22 @@
   position: absolute;
   bottom: 10;
 }
+
+#buttons {
+
+}
+
+
+#button_1 {
+  background: url("/static/images/mountain.jpg") no-repeat scroll 0 0 transparent;
+  background-size: cover;
+  color: #336699;
+  cursor: pointer;
+  font-weight: bold;
+  vertical-align: middle;
+  height: 40px;
+  width: 120px;
+  border-color: #3366cc;
+  border-radius: 40px;
+
+}

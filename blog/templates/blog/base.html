@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-
-
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,33 +8,29 @@
     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <title>theDatabase</title>
     <link href="/static/css/base.css" rel="stylesheet">
-
 </head>
 
+<body id="page_background">
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container" id="header_main">
+      <div class="page-header">
+          <h1><a href="{% url 'home' %}">theDatabase</a></h1>
+          <a href="{% url 'my_beliefs' %}" class="btn btn-success" role="button" id="button_1">My Beliefs</a>
+          <a href="{% url 'organizations' %}" class="btn btn-primary" role="button">Organizations</a>
+          <a href="{% url 'contribute' %}" class="btn btn-primary" role="button">Contribute</a>
 
+          
 
-
-
-
-<nav class="navbar navbar-default navbar-static-top">
-  <div class="container">
-
-    <div class="page-header">
-        <h1><a href="/">theDatabase</a></h1>
-        <a href="{% url 'my_beliefs' %}" class="btn btn-info" role="button">My Beliefs</a>
-
+      </div>
     </div>
-
-  </div>
-</nav>
-<body>
+  </nav>
 
 
-<div class="container">
-            {% block content %}
-            {% endblock %}
-</div>
 
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="/static/bootstrap/js/bootstrap.min.js"></script>
