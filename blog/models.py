@@ -28,9 +28,15 @@ class Org(models.Model):
     def __str__(self):
         return self.name
 
+    def all_data(self):
+        return self.name + self.info
+
 
 class Search(models.Model):
     search_input = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.search_input
 
 
 class Vari(models.Model):

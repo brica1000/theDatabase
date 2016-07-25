@@ -71,7 +71,13 @@ def organizations(request):
 
 
 def search_results(request):
-    return render(request, 'blog/search_results.html')
+    stuff = Search.objects.all()[len(Search.objects.all())-1].search_input # We can do better, but for now....lets be naive.
+    organizations = Org.objects.all()
+    results = []
+    for organization in organizations:
+        if stuff in organization.all_data().lower():
+            results.append(organization)
+    return render(request, 'blog/search_results.html', {'results':results})
 
 
 def modify(request, pk):
@@ -116,5 +122,4 @@ def clothing_design(request):
 
 
 def secret(request):
-
     return render(request, 'blog/secret.html')
