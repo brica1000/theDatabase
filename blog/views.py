@@ -21,7 +21,7 @@ def add_news_event(request):
         if form.is_valid():
             news_event = form.save(commit=False)
             news_event.save()
-            return HttpResponseRedirect(reverse('blog_home'))
+            return HttpResponseRedirect(reverse('home'))
     else:
         form = NewsForm(instance=news_event)
     return render(request, 'blog/add_news_event.html', {'form': form})
@@ -34,7 +34,7 @@ def modify_news_event(request, pk):
         form = NewsForm(request.POST, instance=news_event)
         if form.is_valid():
             news_event.publish()
-            return HttpResponseRedirect(reverse('blog_home'))
+            return HttpResponseRedirect(reverse('home'))
     else:
         form = NewsForm(instance=news_event)
     return render(request, 'blog/modify_news_event.html', {'form':form})
@@ -113,3 +113,8 @@ def cs_results(request):
 
 def clothing_design(request):
     return render(request, 'blog/clothing_design.html')
+
+
+def secret(request):
+
+    return render(request, 'blog/secret.html')

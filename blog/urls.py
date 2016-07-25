@@ -17,4 +17,5 @@ urlpatterns = [
     # url(r'^organizations/(?P<pk>\d+)/modify/$', views.modify, name='modify'),
     url(r'^modify/(?P<pk>\d+)/$', views.modify, name='modify'),
     url(r'^contribute/', views.contribute, name='contribute'),
+    url(r'^secret/', views.secret, name='secret'),
 ]
