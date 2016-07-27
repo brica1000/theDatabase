@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from .forms import CSInputForm, PostForm, OrgForm, NewsForm, SearchOrgForm
 from .models import Beliefs, Vari, Org, NewsFeed, Search
 
-from mymodule import Shape
+from modules.mymodule import Shape
 
 
 def blog_home(request):
