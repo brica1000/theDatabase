@@ -7,6 +7,7 @@ from .forms import CSInputForm, PostForm, OrgForm, NewsForm, SearchOrgForm
 from .models import Beliefs, Vari, Org, NewsFeed, Search
 
 from modules.mymodule import Shape
+from modules.mymodule import Searches
 
 
 def blog_home(request):
@@ -70,16 +71,6 @@ def organizations(request):
     return render(request, 'blog/organizations.html', {'organizations': organizations,'search_form':search_form})
 
 
-def search_results(request):
-    stuff = Search.objects.all()[len(Search.objects.all())-1].search_input # We can do better, but for now....lets be naive.
-    organizations = Org.objects.all()
-    results = []
-    for organization in organizations:
-        if stuff in organization.all_data().lower():
-            results.append(organization)
-    return render(request, 'blog/search_results.html', {'results':results})
-
-
 def modify(request, pk):
     organization = get_object_or_404(Org, pk=pk)
     if request.method == "POST":
@@ -93,6 +84,32 @@ def modify(request, pk):
     return render(request, 'blog/modify.html', {'form': form})
 
 
+"""
+One day, refactor the searchs into modules!
+"""
+def search_results(request):
+    stuff = Search.objects.all()[len(Search.objects.all())-1].search_input # We can do better, but for now....lets be naive.
+    organizations = Org.objects.all()
+    results = Searches.search_basic(stuff, organizations)
+    return render(request, 'blog/search_results.html', {'results':results})
+
+
+def global_search(request): # for now, let it be the same
+    stuff = Search.objects.all()[len(Search.objects.all())-1].search_input # We can do better, but for now....lets be naive.
+    organizations = Org.objects.all()
+    results = []
+    for organization in organizations:
+        if stuff in organization.all_data().lower():
+            results.append(organization)
+    return render(request, 'blog/global_search.html', {'results':results})
+
+
+def directory(request):
+    links = NewsFeed.objects.all()
+    return render(request, 'blog/directory.html', {'links':links})
+
+"""
+"""
 
 def contribute(request):
     return render(request, 'blog/contribute.html', {})

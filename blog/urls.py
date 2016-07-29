@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'^clothing_design/', views.clothing_design, name='clothing_design'),
     url(r'^organizations/', views.organizations, name='organizations'),
     url(r'^search_results/', views.search_results, name='search_results'),
+    url(r'^global_search/', views.global_search, name='global_search'),
+    url(r'^directory/', views.directory, name='directory'),
     # Beware, this won't render the right page!!! Why?
     # url(r'^organizations/(?P<pk>\d+)/modify/$', views.modify, name='modify'),
     url(r'^modify/(?P<pk>\d+)/$', views.modify, name='modify'),

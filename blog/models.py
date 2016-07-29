@@ -39,6 +39,9 @@ class Search(models.Model):
         return self.search_input
 
 
+
+
+
 class Vari(models.Model):
     value = models.CharField(max_length=100)
     type1 = models.CharField(default="one", max_length=100)
