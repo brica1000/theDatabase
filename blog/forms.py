@@ -38,4 +38,4 @@ class NewsForm(forms.ModelForm):
 
     class Meta:
         model = NewsFeed
-        fields = ('title', 'text', 'published_date',)
+        fields = ('title', 'text', 'published_date', 'image',)

@@ -10,6 +10,9 @@ from modules.mymodule import Shape
 from modules.mymodule import Searches
 
 
+
+
+
 def blog_home(request):
     news_events = NewsFeed.objects.order_by('-published_date')
     return render(request, 'blog/home.html', {'news_events': news_events,})
@@ -18,14 +21,15 @@ def blog_home(request):
 def add_news_event(request):
     news_event = NewsFeed()
     if request.method == "POST":
-        form = NewsForm(request.POST, instance=news_event)
-        if form.is_valid():
+        form = NewsForm(request.POST, request.FILES, instance=news_event)
+        if form.is_valid(): # form is not saving! Why?
             news_event = form.save(commit=False)
             news_event.save()
             return HttpResponseRedirect(reverse('home'))
     else:
         form = NewsForm(instance=news_event)
     return render(request, 'blog/add_news_event.html', {'form': form})
+
 
 
 
@@ -42,12 +46,12 @@ def modify_news_event(request, pk):
 
 
 def my_beliefs(request):
-    posts = Beliefs.objects.all()
-    return render(request, 'blog/my_beliefs.html', {'posts': posts})
+    post = Beliefs.objects.all()[0]
+    return render(request, 'blog/my_beliefs.html', {'post': post})
 
 
-def edit_beliefs(request):
-    post = get_object_or_404(Beliefs)
+def edit_beliefs(request, pk):
+    post = get_object_or_404(Beliefs, pk=pk)
     if request.method == "POST":
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
@@ -84,8 +88,12 @@ def modify(request, pk):
     return render(request, 'blog/modify.html', {'form': form})
 
 
+def contribute(request):
+    post = Beliefs.objects.all()[1]
+    return render(request, 'blog/contribute.html', {'post':post})
+
 """
-One day, refactor the searchs into modules!
+Searches - refactor the searchs into modules!
 """
 def search_results(request):
     stuff = Search.objects.all()[len(Search.objects.all())-1].search_input # We can do better, but for now....lets be naive.
@@ -94,7 +102,9 @@ def search_results(request):
     return render(request, 'blog/search_results.html', {'results':results})
 
 
+
 def global_search(request): # for now, let it be the same
+    # This is taking the last search from above!!
     stuff = Search.objects.all()[len(Search.objects.all())-1].search_input # We can do better, but for now....lets be naive.
     organizations = Org.objects.all()
     results = []
@@ -106,13 +116,13 @@ def global_search(request): # for now, let it be the same
 
 def directory(request):
     links = NewsFeed.objects.all()
-    return render(request, 'blog/directory.html', {'links':links})
+    beliefs = Beliefs.objects.all()[0]
+    contribuy = Beliefs.objects.all()[1]
+    organizations = Org.objects.all()
+    return render(request, 'blog/directory.html', {'links':links, 'beliefs':beliefs, 'organizations':organizations,'contribuy':contribuy})
 
 """
 """
-
-def contribute(request):
-    return render(request, 'blog/contribute.html', {})
 
 
 def cs_scrape(request):

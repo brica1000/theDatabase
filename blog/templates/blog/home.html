@@ -14,6 +14,7 @@
         <h4><a href="{% url 'modify_news_event' pk=event.pk %}">{{ event.title }}</a><h4>
         <p>{{ event.text }}<p>
         <p>{{ event.published_date }}</p>
+        <img src="{{ event.image.url  }}">
     </div>
     {% endfor %}
 

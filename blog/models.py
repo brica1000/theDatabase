@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from datetime import datetime
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
 
 
 class Beliefs(models.Model):
@@ -8,7 +10,7 @@ class Beliefs(models.Model):
     text = models.TextField()
 
     def publish(self):
-        self.published_date = timezone.now()
+        self.published_date = datetime.auto_now()
         self.save()
 
     def __str__(self):
@@ -28,7 +30,7 @@ class Org(models.Model):
     def __str__(self):
         return self.name
 
-    def all_data(self):
+    def all_data(self): # Use for search algorithms, maybe this isn't the best...
         return self.name + self.info
 
 
@@ -53,7 +55,14 @@ class Vari(models.Model):
 class NewsFeed(models.Model):
     title = models.CharField(max_length=200)
     text = models.TextField()
-    published_date = models.DateTimeField(default=datetime.now, blank=True)
+    image = models.ImageField(upload_to='blog/media/uploads/', blank=True, null=True )
+    """
+    CHANNGE THE ABOVE!! WHY DID THIS FIX IT?
+    """
+    # storage=FileSystemStorage(location=settings.MEDIA_ROOT) maybe add to imagefield variables
+    published_date = models.DateTimeField(default=datetime.now(), blank=True)
+
+
 
     def publish(self):
         self.published_date = timezone.now()

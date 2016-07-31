@@ -1,4 +1,6 @@
 from django.conf.urls import url
+from django.conf import settings
+from django.conf.urls.static import static
 
 from . import views
 
@@ -7,7 +9,7 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/modify_news_event/$', views.modify_news_event, name='modify_news_event'),
     url(r'^add_news_event/', views.add_news_event, name='add_news_event'),
     url(r'^my_beliefs/', views.my_beliefs, name='my_beliefs'),
-    url(r'^update/', views.edit_beliefs, name='edit_beliefs'),
+    url(r'^update/(?P<pk>\d+)/$', views.edit_beliefs, name='edit_beliefs'),
     url(r'^cs_scrape/', views.cs_scrape, name='cs_scrape'),
     url(r'^cs_results/', views.cs_results, name='cs_results'),
     url(r'^clothing_design/', views.clothing_design, name='clothing_design'),
